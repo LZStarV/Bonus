@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2019", "dom"], // 编译引入的库
+    "target": "ES2019", // 编译目标
+    "module": "commonjs" // 模块类型
+  },
+  "exclude": ["./node_modules"] // 不包含的文件
+}
