@@ -1,5 +1,7 @@
 /.idea
 /node_modules
 /package/server/log
-*.yaml
+pnpm-lock.yaml
 /output
+/package/client/node_modules
+/package/server/node_modules

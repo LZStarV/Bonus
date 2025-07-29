@@ -1,25 +1,10 @@
 {
   "name": "bonus",
-  "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "dev:server": "cross-env NODE_ENV=development nodemon --watch './package/server/**/*.ts' --exec ts-node ./package/server/app.ts",
-    "build:server": "cross-env NODE_ENV=production tsc --p ./package/server"
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "cross-env": "^10.0.0",
-    "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "@types/express": "^5.0.3",
-    "dotenv": "^17.2.1",
-    "express": "^5.1.0",
-    "log4js": "^6.9.1",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2"
+    "concurrently": "^8.2.2"
   }
 }

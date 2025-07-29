@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node app.ts",
+    "build": "cross-env NODE_ENV=production tsc -p"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.9.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "log4js": "^6.9.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "cross-env": "^10.0.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

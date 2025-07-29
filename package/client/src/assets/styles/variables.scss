@@ -1,0 +1,19 @@
+// 表格列宽变量（默认值）
+$level-width: 80px !default;
+$people-size-width: 120px !default;
+$weight-width: 120px !default;
+$bonus-width: 120px !default;
+$action-width: 100px !default;
+
+// 响应式断点
+$breakpoint-md: 768px !default; // 中等屏幕
+$breakpoint-sm: 480px !default; // 小屏幕
+
+// 表格最小宽度
+$table-min-width: 500px !default;
+
+// 间距变量
+$spacing-xs: 8px !default;
+$spacing-sm: 12px !default;
+$spacing-md: 16px !default;
+$spacing-lg: 24px !default;

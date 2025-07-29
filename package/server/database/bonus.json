@@ -1,41 +1,41 @@
 {
-    "perPersonBonus": 1000,
-    "totalBonus": 0,
-    "stageBonus": [
-        {
-            "peopleSize": 10,
-            "weight": 1,
-            "bonus": 0
-        },
-        {
-            "peopleSize": 15,
-            "weight": 1.3,
-            "bonus": 0
-        },
-        {
-            "peopleSize": 20,
-            "weight": 1.6,
-            "bonus": 0
-        },
-        {
-            "peopleSize": 25,
-            "weight": 1.9,
-            "bonus": 0
-        },
-        {
-            "peopleSize": 30,
-            "weight": 2.2,
-            "bonus": 0
-        },
-        {
-            "peopleSize": 35,
-            "weight": 2.5,
-            "bonus": 0
-        },
-        {
-            "peopleSize": 35,
-            "weight": 2.5,
-            "bonus": 0
-        }
-    ]
+  "perPersonBonus": 2000,
+  "totalBonus": 336000,
+  "stageBonus": [
+    {
+      "peopleSize": 15,
+      "weight": 2,
+      "bonus": 27930.174563591023
+    },
+    {
+      "peopleSize": 8,
+      "weight": 1.3,
+      "bonus": 9682.460515378221
+    },
+    {
+      "peopleSize": 20,
+      "weight": 1.6,
+      "bonus": 29792.18620116376
+    },
+    {
+      "peopleSize": 25,
+      "weight": 1.9,
+      "bonus": 44222.776392352454
+    },
+    {
+      "peopleSize": 30,
+      "weight": 2.2,
+      "bonus": 61446.38403990025
+    },
+    {
+      "peopleSize": 35,
+      "weight": 2.5,
+      "bonus": 81463.00914380715
+    },
+    {
+      "peopleSize": 35,
+      "weight": 2.5,
+      "bonus": 81463.00914380715
+    }
+  ]
 }

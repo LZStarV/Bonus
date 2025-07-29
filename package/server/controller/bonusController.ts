@@ -39,55 +39,64 @@ export default class BonusController {
     }
 
     // 修改人均奖金
-    setPerPersonBonus (req: Request, res: Response) {
+    setPerPersonBonus(req: Request, res: Response) {
         try {
+            if (!req.body) {
+                return res.status(400).json({ msg: '请求体不能为空!' });
+            }
             const value: number = req.body.value;
-            if (!value) {
-                return res.status(400).json({msg: '未获取到数据!'});
+            if (value === null || value === undefined) {
+                return res.status(400).json({ msg: '未获取到数据!' });
             }
             bonusOperation.setPerPersonBonus(value);
             return res.status(200).json({ msg: '成功修改人均奖金!' });
         } catch (error) {
             logger.error('修改人均奖金失败', error);
-            return res.status(500).json({msg: '修改失败,请通过日志查看详细错误信息!'})
+            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' })
         }
     }
 
     // 修改第 index 个挡位的人数,并进行数据修改
-    setStagePeopleSize (req: Request, res: Response) {
+    setStagePeopleSize(req: Request, res: Response) {
         try {
-            const index: number = req.body.index;
-            const peopleSize: number = req.body.value;
-            if (!index) {
-                return res.status(400).json({msg: '未获取到挡位编号!'});
+            if (!req.body) {
+                return res.status(400).json({ msg: '请求体不能为空!' });
             }
-            if (!peopleSize) {
-                return res.status(400).json({msg: '未获取到人数信息!'});
+            const index: number = req.body.index;
+            const peopleSize: number = req.body.peopleSize;
+            if (index === null || index === undefined) {
+                return res.status(400).json({ msg: '未获取到挡位编号!' });
+            }
+            else if (peopleSize === null || peopleSize === undefined) {
+                return res.status(400).json({ msg: '未获取到人数信息!' });
             }
             bonusOperation.setStagePeopleSize(index, peopleSize);
-            return res.status(200).json({ msg: '成功修改人均奖金!' });
+            return res.status(200).json({ msg: '成功修改挡位人数!' });
         } catch (error) {
             logger.error('修改挡位人数失败', error);
-            return res.status(500).json({msg: '修改失败,请通过日志查看详细错误信息!'});
+            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' });
         }
     }
 
     //修改第 index 个挡位的权重,并进行数据修改
-    setStageWeight (req: Request, res: Response) {
+    setStageWeight(req: Request, res: Response) {
         try {
-            const index: number = req.body.index;
-            const weight: number = req.body.value;
-            if (!index) {
-                return res.status(400).json({msg: '未获取到挡位编号!'});
+            if (!req.body) {
+                return res.status(400).json({ msg: '请求体不能为空!' });
             }
-            if (!weight) {
-                return res.status(400).json({msg: '未获取到权重信息!'});
+            const index: number = req.body.index;
+            const weight: number = req.body.weight;
+            if (index === null || index === undefined) {
+                return res.status(400).json({ msg: '未获取到挡位编号!' });
+            }
+            else if (weight === null || weight === undefined) {
+                return res.status(400).json({ msg: '未获取到权重信息!' });
             }
             bonusOperation.setStageWeight(index, weight);
-            return res.status(200).json({ msg: '成功修改人均奖金!' });
+            return res.status(200).json({ msg: '成功修改挡位权重!' });
         } catch (error) {
             logger.error('修改挡位权重失败', error);
-            return res.status(500).json({msg: '修改失败,请通过日志查看详细错误信息!'});
+            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' });
         }
     }
 }

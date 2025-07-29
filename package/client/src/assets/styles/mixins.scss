@@ -1,0 +1,31 @@
+@use "./variables" as *;
+
+// 响应式媒体查询混入
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == md {
+    @media screen and (max-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media screen and (max-width: $breakpoint-sm) {
+      @content;
+    }
+  }
+}
+
+// 表格列宽设置混入
+@mixin table-column-widths(
+  $level: $level-width,
+  $people: $people-size-width,
+  $weight: $weight-width,
+  $bonus: $bonus-width,
+  $action: $action-width
+) {
+  :deep(.n-data-table-column) {
+    &[data-key="level"] { width: $level !important; }
+    &[data-key="peopleSize"] { width: $people !important; }
+    &[data-key="weight"] { width: $weight !important; }
+    &[data-key="bonus"] { width: $bonus !important; }
+    &[data-key="action"] { width: $action !important; }
+  }
+}

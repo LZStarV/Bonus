@@ -31,13 +31,27 @@ export const getStageBonus = (): stageBonusInterface[] => {
 
 // 计算总奖金(不进行数据修改)
 const calculateTotalBonus = (data: bonusInterface): number => {
-    const perPersonBonus: number = data.perPersonBonus;
-    const stageBonus: stageBonusInterface[] = data.stageBonus;
-    let totalPeopleSize: number = 0;
-    stageBonus.forEach((element: stageBonusInterface) => {
-        totalPeopleSize += element.peopleSize;
-    });
-    return perPersonBonus * totalPeopleSize;
+  const perPersonBonus: number = data.perPersonBonus;
+  const stageBonus: stageBonusInterface[] = data.stageBonus;
+  let totalPeopleSize: number = 0;
+  stageBonus.forEach((element: stageBonusInterface) => {
+    totalPeopleSize += element.peopleSize;
+  });
+  return perPersonBonus * totalPeopleSize;
+};
+
+// 计算各挡位分配金额情况(不进行数据修改)
+const calculateStageBonus = (data: bonusInterface): Array<number> => {
+  const stageBonus = data.stageBonus;
+  const totalBonus = data.totalBonus;
+  let sumProduct = 0;
+  stageBonus.forEach(stage => {
+    sumProduct += stage.peopleSize * stage.weight;
+  });
+  return stageBonus.map(stage => {
+    const stageProduct = stage.peopleSize * stage.weight;
+    return totalBonus * stageProduct / sumProduct;
+  });
 };
 
 // 修改人均奖金,并进行数据修改
@@ -45,21 +59,35 @@ export const setPerPersonBonus = (value: number): void => {
   const data = readBonusData();
   data.perPersonBonus = value;
   data.totalBonus = calculateTotalBonus(data);
+  const stageAmounts = calculateStageBonus(data);
+  data.stageBonus.forEach((stage, index) => {
+    stage.bonus = stageAmounts[index];
+  });
   writeBonusData(data);
 };
 
 // 修改第 index 个挡位的人数,并进行数据修改
 export const setStagePeopleSize = (index: number, peopleSize: number): void => {
-    const data = readBonusData();
-    data.stageBonus[index].peopleSize = peopleSize;
-    data.totalBonus = calculateTotalBonus(data);
-    writeBonusData(data);
+  const data = readBonusData();
+  data.stageBonus[index].peopleSize = peopleSize;
+  data.totalBonus = calculateTotalBonus(data);
+  const stageAmounts = calculateStageBonus(data);
+  data.stageBonus.forEach((stage, index) => {
+    stage.bonus = stageAmounts[index];
+  });
+  writeBonusData(data);
 }
 
 //修改第 index 个挡位的权重,并进行数据修改
 export const setStageWeight = (index: number, weight: number): void => {
-    const data = readBonusData();
-    data.stageBonus[index].weight = weight;
-    data.totalBonus = calculateTotalBonus(data);
-    writeBonusData(data);
+  const data = readBonusData();
+  data.stageBonus[index].weight = weight;
+  data.totalBonus = calculateTotalBonus(data);
+  const stageAmounts = calculateStageBonus(data);
+  data.stageBonus.forEach((stage, index) => {
+    stage.bonus = stageAmounts[index];
+  });
+  writeBonusData(data);
 }
+
+// TODO: 增加与减少挡位功能
