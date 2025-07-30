@@ -1,17 +1,20 @@
-import express from 'express';
-import BonusController from '../controller/bonusController';
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const bonusController_1 = __importDefault(require("../controller/bonusController"));
 /**
  * @swagger
  * tags:
  *   name: Bonus
  *   description: 奖金计算相关接口
  */
-
-export const getRouter = () => {
-    const bonusController = new BonusController();
-    const router = express.Router();
-
+const getRouter = () => {
+    const bonusController = new bonusController_1.default();
+    const router = express_1.default.Router();
     /**
      * @swagger
      * /api/getPerPersonBonus:
@@ -49,7 +52,6 @@ export const getRouter = () => {
      *                   example: 获取数据失败,请通过日志查看详细错误信息!
      */
     router.get('/getPerPersonBonus', bonusController.getPerPersonBonus);
-
     /**
      * @swagger
      * /api/getTotalBonus:
@@ -87,7 +89,6 @@ export const getRouter = () => {
      *                   example: 获取数据失败,请通过日志查看详细错误信息!
      */
     router.get('/getTotalBonus', bonusController.getTotalBonus);
-
     /**
      * @swagger
      * /api/getStageBonus:
@@ -138,7 +139,6 @@ export const getRouter = () => {
      *                   example: 获取数据失败,请通过日志查看详细错误信息!
      */
     router.get('/getStageBonus', bonusController.getStageBonus);
-
     /**
      * @swagger
      * /api/perPersonBonus:
@@ -192,7 +192,6 @@ export const getRouter = () => {
      *                   example: 修改失败,请通过日志查看详细错误信息!
      */
     router.put('/perPersonBonus', bonusController.setPerPersonBonus);
-
     /**
      * @swagger
      * /api/stage/{index}/peopleSize:
@@ -264,7 +263,6 @@ export const getRouter = () => {
      *                   example: 修改失败,请通过日志查看详细错误信息!
      */
     router.put('/stage/:index/peopleSize', bonusController.setStagePeopleSize);
-
     /**
      * @swagger
      * /api/stage/{index}/weight:
@@ -336,9 +334,6 @@ export const getRouter = () => {
      *                   example: 修改失败,请通过日志查看详细错误信息!
      */
     router.put('/stage/:index/weight', bonusController.setStageWeight);
-
-
-
     /**
      * @swagger
      * /api/createStage:
@@ -397,7 +392,6 @@ export const getRouter = () => {
      *                   example: 修改失败,请通过日志查看详细错误信息!
      */
     router.post('/createStage', bonusController.createStage);
-
     /**
      * @swagger
      * /api/removeStage/{index}:
@@ -456,6 +450,6 @@ export const getRouter = () => {
      *                   example: 修改失败,请通过日志查看详细错误信息!
      */
     router.delete('/removeStage/:index', bonusController.removeStage);
-
     return router;
 };
+exports.getRouter = getRouter;

@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "outDir": "../../output/server",
     "target": "ESNext",
     "module": "CommonJS",
     "moduleResolution": "node",

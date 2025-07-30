@@ -90,4 +90,43 @@ export const setStageWeight = (index: number, weight: number): void => {
   writeBonusData(data);
 }
 
-// TODO: 增加与减少挡位功能
+// 新增挡位
+export const createStage = (peopleSize: number, weight: number): void => {
+  const data = readBonusData();
+  // 创建新挡位对象，bonus初始化为0
+  const newStage: stageBonusInterface = {
+    peopleSize,
+    weight,
+    bonus: 0
+  };
+  data.stageBonus.push(newStage);
+  data.totalBonus = calculateTotalBonus(data);
+  const stageAmounts = calculateStageBonus(data);
+  data.stageBonus.forEach((stage, index) => {
+    stage.bonus = stageAmounts[index];
+  });
+  writeBonusData(data);
+}
+
+// 移除挡位
+export const removeStage = (index: number): void => {
+  const data = readBonusData();
+  const { stageBonus } = data;
+
+  // 验证索引是否有效
+  if (typeof index !== 'number' || index < 0 || index >= stageBonus.length || !Number.isInteger(index)) {
+    throw new Error(`未找到对应序号: ${index}`);
+  }
+
+  // 删除指定索引的挡位
+  stageBonus.splice(index, 1);
+
+  // 重新计算总奖金和各挡位金额
+  data.totalBonus = calculateTotalBonus(data);
+  const stageAmounts = calculateStageBonus(data);
+  data.stageBonus.forEach((stage, i) => {
+    stage.bonus = stageAmounts[i];
+  });
+
+  writeBonusData(data);
+}

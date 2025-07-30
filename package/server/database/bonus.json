@@ -1,41 +1,41 @@
 {
-  "perPersonBonus": 2000,
-  "totalBonus": 336000,
+  "perPersonBonus": 2500,
+  "totalBonus": 175000,
   "stageBonus": [
     {
-      "peopleSize": 15,
-      "weight": 2,
-      "bonus": 27930.174563591023
+      "peopleSize": 10,
+      "weight": 1,
+      "bonus": 13157.894736842105
     },
     {
-      "peopleSize": 8,
+      "peopleSize": 10,
       "weight": 1.3,
-      "bonus": 9682.460515378221
+      "bonus": 17105.263157894737
     },
     {
-      "peopleSize": 20,
+      "peopleSize": 10,
       "weight": 1.6,
-      "bonus": 29792.18620116376
+      "bonus": 21052.63157894737
     },
     {
-      "peopleSize": 25,
+      "peopleSize": 10,
       "weight": 1.9,
-      "bonus": 44222.776392352454
+      "bonus": 25000
     },
     {
-      "peopleSize": 30,
+      "peopleSize": 10,
       "weight": 2.2,
-      "bonus": 61446.38403990025
+      "bonus": 28947.36842105263
     },
     {
-      "peopleSize": 35,
+      "peopleSize": 10,
       "weight": 2.5,
-      "bonus": 81463.00914380715
+      "bonus": 32894.73684210526
     },
     {
-      "peopleSize": 35,
-      "weight": 2.5,
-      "bonus": 81463.00914380715
+      "peopleSize": 10,
+      "weight": 2.8,
+      "bonus": 36842.10526315789
     }
   ]
 }
