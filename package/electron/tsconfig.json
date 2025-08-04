@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "files": [],
+  "compilerOptions": {
+    "outDir": "../../output/electron",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "esnext",
+    "module": "esnext",
+    "baseUrl": ".",
+  },
+  "include": ["**/*"],
+  "exclude": ["../../node_modules", "node_modules"]
+
+}

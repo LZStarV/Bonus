@@ -1,0 +1,64 @@
+{
+  "name": "electron",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "奖金计算器",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "pnpm build && electron ../../output/electron/main.js",
+    "package": "electron-builder"
+  },
+  "build": {
+    "appId": "com.electron.bonus",
+    "productName": "奖金计算器",
+    "files": [
+      {
+        "from": "../../output/electron",
+        "to": ".",
+        "filter": ["main.js"]
+      },
+      {
+        "from": "../../output/client",
+        "to": "client"
+      },
+      {
+        "from": ".",
+        "to": ".",
+        "filter": ["package.json"]
+      },
+      "!** /node_modules/**/*",
+      "!../../dist-electron"
+    ],
+    "extraFiles": [
+      {
+        "from": "../../output/server-transpiled/server.exe",
+        "to": "server"
+      }
+    ],
+    "asarUnpack": [],
+    "directories": {
+      "output": "../../dist-electron"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "奖金计算器"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.9.0",
+  "devDependencies": {
+    "@types/electron": "^1.6.12",
+    "@types/node": "^24.1.0",
+    "electron": "^37.2.4",
+    "electron-builder": "^26.0.12"
+  }
+}
