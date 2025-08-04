@@ -1,6 +1,10 @@
-import type { stageBonusInterface, bonusInterface } from '../type/stageBonus';
+import type { stageBonusInterface, bonusInterface } from '../type/stageBonus.js';
 import * as fs from 'fs';
 import * as path from 'path';
+import {fileURLToPath} from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const jsonPath = path.join(__dirname, 'bonus.json');
 
 // 读取 JSON 数据
@@ -15,7 +19,7 @@ const writeBonusData = (data: any): void => {
 };
 
 // 获取人均奖金
-export const getperPersonBonus = (): number => {
+export const getPerPersonBonus = (): number => {
   return readBonusData().perPersonBonus;
 };
 

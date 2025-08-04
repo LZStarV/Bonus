@@ -1,151 +1,235 @@
-import { Request, Response } from "express";
-import * as bonusOperation from '../database/db';
-import { logger } from '../config/setLog';
-import type { stageBonusInterface } from "../type/stageBonus";
+import { Request, Response } from 'express';
+import * as bonusOperation from '../database/db.js';
+import type { stageBonusInterface, bonusInterface } from '../type/stageBonus.js';
 
+// 获取人均奖金
+export const getPerPersonBonus = (req: Request, res: Response) => {
+  try {
+    const bonus = bonusOperation.getPerPersonBonus();
+    res.status(200).json({
+      status: 'success',
+      data: bonus,
+    });
+  } catch (error) {
+    console.error('获取人均奖金失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '获取人均奖金失败',
+    });
+  }
+};
 
-export default class BonusController {
+// 获取总奖金
+export const getTotalBonus = (req: Request, res: Response) => {
+  try {
+    const bonus = bonusOperation.getTotalBonus();
+    res.status(200).json({
+      status: 'success',
+      data: bonus,
+    });
+  } catch (error) {
+    console.error('获取总奖金失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '获取总奖金失败',
+    });
+  }
+};
 
-    // 获取人均奖金
-    getPerPersonBonus(_req: Request, res: Response) {
-        try {
-            const perPersonBonus: number = bonusOperation.getperPersonBonus();
-            return res.status(200).json({ data: perPersonBonus, msg: '成功获取人均奖金数!' });
-        } catch (error) {
-            logger.error('获取人均奖金失败', error);
-            return res.status(500).json({ data: 0, msg: '获取数据失败,请通过日志查看详细错误信息!' });
-        }
+// 获取各挡位奖金分配情况
+export const getStageBonus = (req: Request, res: Response) => {
+  try {
+    const stages = bonusOperation.getStageBonus();
+    res.status(200).json({
+      status: 'success',
+      data: stages,
+    });
+  } catch (error) {
+    console.error('获取各挡位奖金分配情况失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '获取各挡位奖金分配情况失败',
+    });
+  }
+};
+
+// 设置人均奖金
+export const setPerPersonBonus = (req: Request, res: Response) => {
+  try {
+    const { bonus } = req.body;
+    if (typeof bonus !== 'number' || bonus < 0) {
+      return res.status(400).json({
+        status: 'error',
+        message: '无效的奖金金额!',
+      });
+    }
+    bonusOperation.setPerPersonBonus(bonus);
+    res.status(200).json({
+      status: 'success',
+      message: '人均奖金设置成功',
+      data: bonus,
+    });
+  } catch (error) {
+    console.error('修改人均奖金失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '修改人均奖金失败',
+    });
+  }
+};
+
+// 设置挡位人数
+export const setStagePeopleSize = (req: Request, res: Response) => {
+  try {
+    const index: number = parseInt(req.params.index, 10);
+    const { peopleSize } = req.body;
+
+    // 验证参数
+    if (isNaN(index) || index < 0) {
+      return res.status(400).json({
+        status: 'error',
+        message: '无效的挡位索引!',
+      });
+    }
+    if (typeof peopleSize !== 'number' || peopleSize < 0 || !Number.isInteger(peopleSize)) {
+      return res.status(400).json({
+        status: 'error',
+        message: '人数必须是非负整数!',
+      });
     }
 
-    // 获取总奖金
-    getTotalBonus(_req: Request, res: Response) {
-        try {
-            const totalBonus: number = bonusOperation.getTotalBonus();
-            return res.status(200).json({ data: totalBonus, msg: '成功获取总奖金!' });
-        } catch (error) {
-            logger.error('获取总奖金失败', error);
-            return res.status(500).json({ data: 0, msg: '获取数据失败,请通过日志查看详细错误信息!' });
-        }
+    bonusOperation.setStagePeopleSize(index, peopleSize);
+    res.status(200).json({
+      status: 'success',
+      message: '挡位人数设置成功',
+      data: {
+        index,
+        peopleSize,
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error && error.message === '未找到对应序号的挡位') {
+      return res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+    console.error('修改挡位人数失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '修改挡位人数失败',
+    });
+  }
+};
+
+// 设置挡位权重
+export const setStageWeight = (req: Request, res: Response) => {
+  try {
+    const index: number = parseInt(req.params.index, 10);
+    const { weight } = req.body;
+
+    // 验证参数
+    if (isNaN(index) || index < 0) {
+      return res.status(400).json({
+        status: 'error',
+        message: '无效的挡位索引!',
+      });
+    }
+    if (typeof weight !== 'number' || weight <= 0) {
+      return res.status(400).json({
+        status: 'error',
+        message: '权重必须是正数!',
+      });
     }
 
-    // 获取各挡位奖金分配情况
-    getStageBonus(_req: Request, res: Response) {
-        try {
-            const stageBonus = bonusOperation.getStageBonus();
-            return res.status(200).json({ data: stageBonus, msg: '成功获取各挡位奖金分配情况!' });
-        } catch (error) {
-            logger.error('获取各挡位奖金分配情况失败', error);
-            return res.status(500).json({ data: [], msg: '获取数据失败,请通过日志查看详细错误信息!' });
-        }
+    bonusOperation.setStageWeight(index, weight);
+    res.status(200).json({
+      status: 'success',
+      message: '挡位权重设置成功',
+      data: {
+        index,
+        weight,
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error && error.message === '未找到对应序号的挡位') {
+      return res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+    console.error('修改挡位权重失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '修改挡位权重失败',
+    });
+  }
+};
+
+// 新增挡位
+export const createStage = (req: Request, res: Response) => {
+  try {
+    const { peopleSize, weight } = req.body;
+
+    // 验证参数
+    if (typeof peopleSize !== 'number' || peopleSize < 0 || !Number.isInteger(peopleSize)) {
+      return res.status(400).json({
+        status: 'error',
+        message: '人数必须是非负整数!',
+      });
+    }
+    if (typeof weight !== 'number' || weight <= 0) {
+      return res.status(400).json({
+        status: 'error',
+        message: '权重必须是正数!',
+      });
     }
 
-    // 修改人均奖金
-    setPerPersonBonus(req: Request, res: Response) {
-        try {
-            if (!req.body) {
-                return res.status(400).json({ msg: '请求体不能为空!' });
-            }
-            const value: number = req.body.value;
-            if (value === null || value === undefined) {
-                return res.status(400).json({ msg: '未获取到数据!' });
-            }
-            bonusOperation.setPerPersonBonus(value);
-            return res.status(200).json({ msg: '成功修改人均奖金!' });
-        } catch (error) {
-            logger.error('修改人均奖金失败', error);
-            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' })
-        }
+    bonusOperation.createStage(peopleSize, weight);
+    res.status(200).json({
+      status: 'success',
+      message: '新增挡位成功',
+      data: bonusOperation.getStageBonus(),
+    });
+  } catch (error) {
+    console.error('新增挡位失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '新增挡位失败',
+    });
+  }
+};
+
+// 移除挡位
+export const removeStage = (req: Request, res: Response) => {
+  try {
+    const index: number = parseInt(req.params.index, 10);
+
+    // 验证参数
+    if (isNaN(index) || index < 0) {
+      return res.status(400).json({
+        status: 'error',
+        message: '无效的挡位索引!',
+      });
     }
 
-    // 修改第 index 个挡位的人数,并进行数据修改
-    setStagePeopleSize(req: Request, res: Response) {
-        try {
-            const index: number = parseInt(req.params.index, 10);
-            if (isNaN(index) || index < 0) {
-                return res.status(400).json({ msg: '无效的挡位索引!' });
-            }
-            if (!req.body) {
-                return res.status(400).json({ msg: '请求体不能为空!' });
-            }
-            const peopleSize: number = req.body.peopleSize;
-            if (peopleSize === null || peopleSize === undefined) {
-                return res.status(400).json({ msg: '未获取到人数信息!' });
-            }
-            bonusOperation.setStagePeopleSize(index, peopleSize);
-            return res.status(200).json({ msg: '成功修改挡位人数!' });
-        } catch (error) {
-            if ((error as Error).message === '未找到对应序号') {
-                return res.status(404).json({ msg: '未找到对应序号!' });
-            }
-            logger.error('修改挡位人数失败', error);
-            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' });
-        }
+    bonusOperation.removeStage(index);
+    res.status(200).json({
+      status: 'success',
+      message: '移除挡位成功',
+      data: bonusOperation.getStageBonus(),
+    });
+  } catch (error) {
+    if (error instanceof Error && error.message === '未找到对应序号的挡位') {
+      return res.status(404).json({
+        status: 'error',
+        message: error.message,
+      });
     }
-
-    //修改第 index 个挡位的权重,并进行数据修改
-    setStageWeight(req: Request, res: Response) {
-        try {
-            const index: number = parseInt(req.params.index, 10);
-            if (isNaN(index) || index < 0) {
-                return res.status(400).json({ msg: '无效的挡位索引!' });
-            }
-            if (!req.body) {
-                return res.status(400).json({ msg: '请求体不能为空!' });
-            }
-            const weight: number = req.body.weight;
-            if (weight === null || weight === undefined) {
-                return res.status(400).json({ msg: '未获取到权重信息!' });
-            }
-            bonusOperation.setStageWeight(index, weight);
-            return res.status(200).json({ msg: '成功修改挡位权重!' });
-        } catch (error) {
-            if ((error as Error).message === '未找到对应序号') {
-                return res.status(404).json({ msg: '未找到对应序号!' });
-            }
-            logger.error('修改挡位权重失败', error);
-            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' });
-        }
-    }
-
-    // 新增挡位
-    createStage(req: Request, res: Response) {
-        try {
-            if (!req.body) {
-                return res.status(400).json({ msg: '请求体不能为空!' });
-            }
-            const { peopleSize, weight } = req.body;
-            if (peopleSize === null || peopleSize === undefined) {
-                return res.status(400).json({ msg: '未获取到人数信息!' });
-            }
-            if (weight === null || weight === undefined) {
-                return res.status(400).json({ msg: '未获取到权重信息!' });
-            }
-            bonusOperation.createStage(peopleSize, weight);
-            return res.status(200).json({ msg: '成功新增挡位!' });
-        } catch (error) {
-            logger.error('新增挡位失败', error);
-            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' });
-        }
-    }
-
-    // 移除挡位
-    removeStage(req: Request, res: Response) {
-        try {
-            if (!req.params) {
-                return res.status(400).json({ msg: '请求参数不能为空!' });
-            }
-            const index: number = parseInt(req.params.index, 10);
-            if (isNaN(index) || index < 0) {
-                return res.status(400).json({ msg: '无效的挡位索引!' });
-            }
-            bonusOperation.removeStage(index);
-            return res.status(200).json({ msg: '成功移除挡位!' });
-        } catch (error) {
-            if ((error as Error).message === '未找到对应序号') {
-                return res.status(404).json({ msg: '未找到对应序号!' });
-            }
-            logger.error('移除挡位失败', error);
-            return res.status(500).json({ msg: '修改失败,请通过日志查看详细错误信息!' });
-        }
-    }
-}
+    console.error('移除挡位失败', error);
+    res.status(500).json({
+      status: 'error',
+      message: '移除挡位失败',
+    });
+  }
+};

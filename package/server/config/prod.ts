@@ -1,7 +1,6 @@
-import path from "path";
-import { envConfigInterface } from "../type/envConfig";
+import { envConfigInterface } from "../type/envConfig.js";
 
 export const productionConfig: envConfigInterface = {
-    staticFilePath: path.join(__dirname, "../client"),
+    staticFilePath:"../client",
     port: 8080,
 };

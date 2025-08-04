@@ -1,7 +1,11 @@
 import * as path from 'path';
-import { developmentConfig } from './dev';
-import { productionConfig } from './prod';
+import { developmentConfig } from './dev.js';
+import { productionConfig } from './prod.js';
 import type { Options } from 'swagger-jsdoc';
+import {fileURLToPath} from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const dev_port = developmentConfig.port;
 const prod_port = productionConfig.port;

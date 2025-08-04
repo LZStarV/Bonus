@@ -1,6 +1,6 @@
-import { developmentConfig } from "./dev";
-import { productionConfig } from "./prod";
-import { envConfigInterface } from "../type/envConfig";
+import { developmentConfig } from "./dev.js";
+import { productionConfig } from "./prod.js";
+import { envConfigInterface } from "../type/envConfig.js";
 
 const env = process.env.NODE_ENV;
 
@@ -11,4 +11,6 @@ const getConfig = (): envConfigInterface => {
     return productionConfig;
 };
 
-export const envConfig = getConfig();
+const envConfig = getConfig();
+
+export default envConfig;

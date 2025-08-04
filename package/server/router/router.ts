@@ -1,5 +1,5 @@
 import express from 'express';
-import BonusController from '../controller/bonusController';
+import * as bonusController from '../controller/bonusController.js';
 
 /**
  * @swagger
@@ -8,8 +8,7 @@ import BonusController from '../controller/bonusController';
  *   description: 奖金计算相关接口
  */
 
-export const getRouter = () => {
-    const bonusController = new BonusController();
+const getRouter = () => {
     const router = express.Router();
 
     /**
@@ -459,3 +458,6 @@ export const getRouter = () => {
 
     return router;
 };
+
+const router = getRouter();
+export default router;

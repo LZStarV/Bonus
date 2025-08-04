@@ -2,9 +2,12 @@
   "name": "server",
   "version": "0.0.0",
   "main": "app.ts",
+  "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node app.ts",
-    "build": "cross-env NODE_ENV=production tsc"
+    "dev": "cross-env NODE_ENV=development nodemon --exec node --experimental-specifier-resolution=node --loader ts-node/esm app.ts",
+    "build": "cross-env NODE_ENV=production tsc && node ../../output/server/app.js",
+    "serve": "cross-env NODE_ENV=production tsc && node ../../output/server/app.js",
+    "babel:transpile": "babel ../../output/server -d ../../output/server-transpiled"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +22,12 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.28.0",
+    "@babel/core": "^7.28.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.27.1",
+    "@babel/preset-env": "^7.28.0",
     "@types/express": "^5.0.3",
+    "@types/node": "^24.1.0",
     "cross-env": "^10.0.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",

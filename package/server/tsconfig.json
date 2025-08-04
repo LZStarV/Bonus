@@ -1,13 +1,24 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "rootDir": ".",
     "outDir": "../../output/server",
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "ESNext"
+    },
+    "esm": true,
+    "transpileOnly": true,
+    "files": true,
+    "experimentalSpecifierResolution": "node"
   },
   "include": ["./**/*.ts"],
-  "exclude": ["../../node_modules"]
+  "exclude": ["../../node_modules", "node_modules/**/*"]
 }
