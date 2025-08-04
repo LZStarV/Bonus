@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["ES2019", "dom"],
-    "target": "ES2019",
+    "lib": ["ESNext", "dom"],
+    "target": "ESNext",
     "module": "commonjs"
   },
   "exclude": ["./node_modules"]

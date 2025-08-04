@@ -1,10 +1,19 @@
 {
   "name": "bonus",
+  "type": "module",
+  "main": "output/electron/main.js",
   "scripts": {
     "dev": "pnpm -r --parallel dev",
-    "build": "pnpm -r build"
+    "start:electron": "pnpm --filter electron start",
+    "build": "pnpm -r build",
+    "electron:dev": "concurrently \"pnpm dev\" \"pnpm start:electron\"",
+    "electron:build": "concurrently \"pnpm build\" \"pnpm start:electron\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "typescript": "^5.8.3"
   }
 }
